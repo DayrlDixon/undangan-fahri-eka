@@ -41,10 +41,14 @@ function parsePathNames() {
     guestSeg = segs[0];
   }
 
-  // fallback: also check query param ?to=Guest or ?couple=...
-  const params = new URLSearchParams(window.location.search);
-  if (!guestSeg && params.get('to')) guestSeg = params.get('to');
-  if (!coupleSeg && params.get('couple')) coupleSeg = params.get('couple');
+  // fallback: also check query param ?nama=Guest atau ?to=Guest
+const params = new URLSearchParams(window.location.search);
+if (!guestSeg && (params.get('nama') || params.get('to'))) {
+  guestSeg = params.get('nama') || params.get('to');
+}
+if (!coupleSeg && params.get('couple')) {
+  coupleSeg = params.get('couple');
+}
 
   return { couple: beautifySegment(coupleSeg), guest: beautifySegment(guestSeg) };
 }
@@ -101,4 +105,5 @@ musicBtn.addEventListener("click", () => {
   }
   isPlaying = !isPlaying;
 });
+
 
