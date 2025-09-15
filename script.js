@@ -12,7 +12,7 @@ function beautifySegment(seg) {
 document.addEventListener('DOMContentLoaded', function () {
   const params = new URLSearchParams(window.location.search);
 
-  const guestName = beautifySegment(params.get("nama") || params.get("to"));
+  const guestName = beautifySegment(params.get("nama") || params.get("to"))
   const coupleName = beautifySegment(params.get("couple"));
 
   const coverGuest = document.getElementById('cover-guest');
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Nama pasangan
   if (coupleName) {
     coverCouple.textContent = coupleName;
-    document.title = nama + " - Undangan";
+    document.title = coupleName + " - Undangan";
   } else {
     coverCouple.textContent = "Fahri & Eka";
   }
