@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Undangan - <span id="title-couple">Pasangan</span></title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Background -->
+  <div class="background" aria-hidden="true"></div>
+
+  <!-- COVER / SPLASH -->
+  <main id="cover" class="cover" role="main" aria-labelledby="cover-heading">
+    <div class="cover-box">
+      <h3 id="cover-sub">Dengan hormat,</h3>
+      <h1 id="cover-guest">Tamu Undangan</h1>        <!-- Nama tamu -->
+      <p class="couple-name" id="cover-couple">Fahri & Eka </p> <!-- Nama pasangan -->
+      <p class="date">05 Oktober 2030</p>
+
+      <div class="cover-actions">
+        <button id="openBtn" class="btn-primary">Buka Undangan</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- CONTENT (tersembunyi sampai tombol ditekan) -->
+  <section id="content" class="content hidden" aria-hidden="true">
+    <!-- Tombol Musik -->
+<div class="music-control">
+  <button id="musicBtn">🔊 Musik</button>
+</div>
+
+<!-- Musik -->
+<audio id="bgMusic" loop>
+  <source src="assets/audio.mp3" type="audio/mpeg">
+  Browser Anda tidak mendukung audio.
+</audio>
+
+
+    <!-- Ornamen SVG -->
+    <div class="ornamen-wrap" aria-hidden="true">
+      <img src="assets/img1.webp" alt="" class="ornamen" />
+    </div>
+
+    <!-- Marquee / teks berjalan -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-inner"><span id="marquee-text">Dengan penuh rasa syukur, kami mengundang Anda hadir di hari bahagia kami 💕</span></div>
+    </div>
+
+    <!-- Gallery foto -->
+    <div class="gallery">
+      <img src="assets/img.webp" alt="Foto Prewed 1" />
+      <img src="assets/img2.webp" alt="Foto Prewed 2" />
+      <img src="assets/img.webp" alt="Foto Prewed 3" />
+    </div>
+
+    <!-- Detail acara -->
+    <article class="detail" id="detail-event">
+      <h2>Detail Acara</h2>
+      <p><strong>Resepsi:</strong> Minggu, 05 Oktober 2030</p>
+      <p><strong>Lokasi:</strong> Gedung Serbaguna, Tangerang</p>
+      <div class="rsvp">
+        <a class="rsvp-btn" id="rsvp-ws" href="https://wa.me/6281287927192?text=Halo%2C%20saya%20konfirmasi%20hadir" target="_blank" rel="noopener">Konfirmasi via WhatsApp</a>
+        <a class="rsvp-btn" id="rsvp-form" href="https://forms.gle/xy6PqyHkSArBJ3gN8" target="_blank" rel="noopener">Isi RSVP (Form)</a>
+      </div>
+    </article>
+
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
