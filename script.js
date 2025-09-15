@@ -1,0 +1,104 @@
+// ------------- Utility: beautify a segment to displayable text -------------
+function beautifySegment(seg) {
+  if (!seg) return '';
+  // decode percent-encoding and plus-signs
+  let s = decodeURIComponent(seg.replace(/\+/g,' '));
+  // common separators: &  or - or _ or .
+  s = s.replace(/%26/g,' & '); // just in case
+  s = s.replace(/[\-_.]+/g, ' ');
+
+  // if contains ampersand symbol, ensure spaced
+  s = s.replace(/&/g, ' & ');
+  // collapse multiple spaces
+  s = s.replace(/\s+/g,' ').trim();
+
+  // Capitalize each word
+  s = s.split(' ').map(w=>{
+    if (!w) return w;
+    return w.charAt(0).toUpperCase() + w.slice(1);
+  }).join(' ');
+  return s;
+}
+
+// ------------- Parse path like /novi&rahmat/Fahri or /novi-rahmat/Fahri -------------
+function parsePathNames() {
+  // remove leading and trailing slash
+  const path = window.location.pathname.replace(/^\/|\/$/g,'');
+  if (!path) return { couple: null, guest: null };
+
+  const parts = path.split('/');
+  // If URL hosted under a subfolder (like /undangan/index.html), try to detect typical patterns:
+  // We'll find the last two meaningful segments.
+  const segs = parts.filter(p => p && p.trim().length>0);
+  let coupleSeg = null, guestSeg = null;
+
+  if (segs.length >= 2) {
+    // take last two
+    coupleSeg = segs[segs.length - 2];
+    guestSeg = segs[segs.length - 1];
+  } else if (segs.length === 1) {
+    // only one segment provided: treat it as guest, couple fallback from default or query
+    guestSeg = segs[0];
+  }
+
+  // fallback: also check query param ?to=Guest or ?couple=...
+  const params = new URLSearchParams(window.location.search);
+  if (!guestSeg && params.get('to')) guestSeg = params.get('to');
+  if (!coupleSeg && params.get('couple')) coupleSeg = params.get('couple');
+
+  return { couple: beautifySegment(coupleSeg), guest: beautifySegment(guestSeg) };
+}
+
+// ------------- On load: fill cover text -------------
+document.addEventListener('DOMContentLoaded', function() {
+  const names = parsePathNames();
+
+  const coverGuest = document.getElementById('cover-guest');
+  const coverCouple = document.getElementById('cover-couple');
+
+  if (names.guest && names.guest.length > 0) {
+    coverGuest.textContent = names.guest;
+  } else {
+    coverGuest.textContent = 'Tamu Undangan';
+  }
+
+  if (names.couple && names.couple.length > 0) {
+    coverCouple.textContent = names.couple;
+    document.title = names.couple + ' - Undangan';
+  } else {
+    coverCouple.textContent = 'Fahri & Eka';
+  }
+
+  // Open button functionality
+  const openBtn = document.getElementById('openBtn');
+  const cover = document.getElementById('cover');
+  const content = document.getElementById('content');
+
+  openBtn.addEventListener('click', function() {
+    cover.style.display = 'none';
+    content.classList.remove('hidden');
+    content.setAttribute('aria-hidden','false');
+    // focus top of content for accessibility
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // try auto play music (if you add audio), many browsers block autoplay with sound.
+    // If you add background audio, try to play muted or ask user to unmute.
+  });
+
+  // also allow open via Enter key when focused
+  openBtn.addEventListener('keyup', function(e){ if(e.key === 'Enter') openBtn.click(); });
+});
+const music = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicBtn");
+let isPlaying = false;
+
+musicBtn.addEventListener("click", () => {
+  if (isPlaying) {
+    music.pause();
+    musicBtn.textContent = "🔇 Musik Off";
+  } else {
+    music.play();
+    musicBtn.textContent = "🔊 Musik On";
+  }
+  isPlaying = !isPlaying;
+});
+
