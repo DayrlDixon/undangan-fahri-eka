@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Nama pasangan
   if (coupleName) {
     coverCouple.textContent = coupleName;
-    document.title = coupleName + " - Undangan";
+    document.title = nama + " - Undangan";
   } else {
     coverCouple.textContent = "Fahri & Eka";
   }
@@ -62,3 +62,4 @@ document.addEventListener('DOMContentLoaded', function () {
     isPlaying = !isPlaying;
   });
 });
+
