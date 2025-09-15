@@ -11,10 +11,8 @@ function beautifySegment(seg) {
 
 document.addEventListener('DOMContentLoaded', function () {
   const params = new URLSearchParams(window.location.search);
-
-  const guestName = beautifySegment(params.get("nama") || params.get("to"))
+  const guestName = beautifySegment(params.get("nama") || params.get("to"));
   const coupleName = beautifySegment(params.get("couple"));
-
   const coverGuest = document.getElementById('cover-guest');
   const coverCouple = document.getElementById('cover-couple');
 
@@ -62,4 +60,5 @@ document.addEventListener('DOMContentLoaded', function () {
     isPlaying = !isPlaying;
   });
 });
+
 
