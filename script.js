@@ -21,25 +21,29 @@ function beautifySegment(seg) {
 }
 
 // ------------- Parse path like /novi&rahmat/Fahri or /novi-rahmat/Fahri -------------
-function parsePathNames() {
-  // remove leading and trailing slash
-  const path = window.location.pathname.replace(/^\/|\/$/g,'');
-  if (!path) return { couple: null, guest: null };
+document.addEventListener('DOMContentLoaded', function () {
+  const params = new URLSearchParams(window.location.search);
 
-  const parts = path.split('/');
-  // If URL hosted under a subfolder (like /undangan/index.html), try to detect typical patterns:
-  // We'll find the last two meaningful segments.
-  const segs = parts.filter(p => p && p.trim().length>0);
-  let coupleSeg = null, guestSeg = null;
+  const guestName = params.get("nama") || params.get("to"); 
+  const coupleName = params.get("couple");
 
-  if (segs.length >= 2) {
-    // take last two
-    coupleSeg = segs[segs.length - 2];
-    guestSeg = segs[segs.length - 1];
-  } else if (segs.length === 1) {
-    // only one segment provided: treat it as guest, couple fallback from default or query
-    guestSeg = segs[0];
+  // Ambil elemen di HTML
+  const coverGuest = document.getElementById('cover-guest');
+  const coverCouple = document.getElementById('cover-couple');
+
+  // Set nama tamu
+  if (guestName) {
+    coverGuest.textContent = "Kepada Yth. " + decodeURIComponent(guestName);
+  } else {
+    coverGuest.textContent = "Tamu Undangan";
   }
+
+  // Set nama pengantin kalau ada
+  if (coupleName) {
+    coverCouple.textContent = decodeURIComponent(coupleName);
+    document.title = coupleName + " - Undangan";
+  }
+});
 
   // fallback: also check query param ?nama=Guest atau ?to=Guest
 const params = new URLSearchParams(window.location.search);
@@ -105,5 +109,6 @@ musicBtn.addEventListener("click", () => {
   }
   isPlaying = !isPlaying;
 });
+
 
 
